@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
-// Creators: Justa Liang
+// Creator: Justa Liang
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/finance/VestingWallet.sol";
 
 /**
- * @title VestingWallet
+ * @title ERC721 with anti-rug-pull mechanism
  * @dev This contract combines ERC721Enumerable and VestingWallet.
  */
 abstract contract ERC721AntiRugPull is ERC721Enumerable, VestingWallet {
@@ -101,7 +101,7 @@ abstract contract ERC721AntiRugPull is ERC721Enumerable, VestingWallet {
         tokenMintPrice[tokenId] = mintPrice;
     }
 
-    /// @dev Mint and record the mint price
+    /// @dev Burn and delete price storage
     function _burn(uint256 tokenId) internal override {
         super._burn(tokenId);
         delete tokenMintPrice[tokenId];
